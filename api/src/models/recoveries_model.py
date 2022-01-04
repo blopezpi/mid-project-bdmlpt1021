@@ -1,0 +1,16 @@
+from typing import List, Optional
+
+from pydantic import BaseModel
+
+
+class Recoveries(BaseModel):
+    recoveries: Optional[int]
+    recoveries_accumulated: int
+    country: Optional[str]
+    date: Optional[str]
+    longitude: Optional[float]
+    latitude: Optional[float]
+
+
+class RecoveriesByDate(BaseModel):
+    countries: List[Recoveries]
