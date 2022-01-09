@@ -7,7 +7,7 @@ import data.funcdata as dt
 def app():
     st.title("Deaths")
     st.header("Welcome to the COVID 19 Deaths Page")
-    st.write(":heavy_minus_sign:" * 50)
+    st.write(":heavy_minus_sign:" * 80)
     col1, col2, col3 = st.columns(3)
     with col1:
         st.empty()
@@ -28,7 +28,7 @@ def app():
     with col3:
         st.empty()
 
-    st.write(":heavy_minus_sign:" * 50)
+    st.write(":heavy_minus_sign:" * 80)
 
     countries = st.sidebar.multiselect(
         "Select one or more countries (max 10): ", options=dt.get_countries()
