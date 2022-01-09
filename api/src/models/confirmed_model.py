@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class Confirmed(BaseModel):
     cases: Optional[int]
-    cases_accumulated: int
+    cases_accumulated: Optional[int]
     country: Optional[str]
     date: Optional[str]
     longitude: Optional[float]

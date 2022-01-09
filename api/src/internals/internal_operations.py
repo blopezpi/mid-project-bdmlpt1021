@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Dict
 
 import config
 from bson.objectid import ObjectId
@@ -51,7 +52,7 @@ db = database[str(settings.mongo_col)]
 )
 def delete_row(
     objectid: str = Depends(validate_objectid), api_key: APIKey = Depends(get_api_key)
-):
+) -> Dict:
     """
     This endpoint have the capacity for deleting an item you only must to provide a valid objectid.
     """
@@ -80,7 +81,7 @@ def update_row(
     item: Update,
     objectid: str = Depends(validate_objectid),
     api_key: APIKey = Depends(get_api_key),
-):
+) -> Dict:
     """
     This endpoint have the capacity for updating an item you must to provide a valid objectid
     and a body parameter.
@@ -108,7 +109,7 @@ def update_row(
     response_model_exclude_unset=True,
     responses=responses_created,
 )
-def create_row(item: Create, api_key: APIKey = Depends(get_api_key)):
+def create_row(item: Create, api_key: APIKey = Depends(get_api_key)) -> Dict:
     """
     This endpoint have the capacity for creating an item you only must to provide a valid objectid
     and a body parameter.

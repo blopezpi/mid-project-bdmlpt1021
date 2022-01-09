@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 data/covid-confirmed-global/
+dashboard/src/pdf_report_table.html
+dashboard/src/pdf_report.pdf
 
 # C extensions
 *.so

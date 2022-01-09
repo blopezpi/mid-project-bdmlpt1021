@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from bson import ObjectId
 
 
@@ -33,3 +35,7 @@ responses = {
     404: {"description": "Item not found"},
     200: {"description": "OK"},
 }
+
+
+def validate_month(date_: str):
+    return datetime.strptime(date_, "%Y-%m")

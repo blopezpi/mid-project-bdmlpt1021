@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class Recoveries(BaseModel):
     recoveries: Optional[int]
-    recoveries_accumulated: int
+    recoveries_accumulated: Optional[int]
     country: Optional[str]
     date: Optional[str]
     longitude: Optional[float]

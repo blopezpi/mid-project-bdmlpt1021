@@ -1,0 +1,27 @@
+<head></head>
+<style>
+table, th, td {
+  border: 2px solid black;
+}
+
+table {
+  width: 100%;
+}
+</style>
+<body>
+    <h1>Covid 19</h1>
+    <table>
+        <tr>
+            {% for column in df.columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for idx, row in df.iterrows() %}
+        <tr>
+            {% for colname in df.columns %}
+            <td>{{ row[colname] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
