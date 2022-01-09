@@ -5,8 +5,8 @@ from pydantic import BaseModel
 
 
 class Location(BaseModel):
-    type: str
-    coordinates: List[float]
+    type: Optional[str]
+    coordinates: Optional[List[float]]
 
 
 class Update(BaseModel):

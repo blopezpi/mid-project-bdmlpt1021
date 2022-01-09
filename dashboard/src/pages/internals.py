@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 import requests
@@ -40,29 +41,68 @@ def update():
     objectid = st.text_input("Introduce the objectid to update: ")
     params = {}
     if objectid:
-        params["country"] = st.text_input("New country:")
-        params["latitude"] = st.number_input("New latitude:", format="%.2f")
-        params["longitude"] = st.number_input("New longitude:", format="%.2f")
-        params["cases"] = st.number_input("Cases: ", step=1, format="%i")
-        params["deaths"] = st.number_input("Deaths: ", step=1, format="%i")
-        params["recoveries"] = st.number_input("Recoveries: ", step=1, format="%i")
-        params["cases_accumulated"] = st.number_input(
-            "Cases accumulated: ", step=1, format="%i"
-        )
-        params["deaths_accumulated"] = st.number_input(
+        country = st.text_input("New country:")
+        if country:
+            params["country"] = country
+
+        latitude = st.number_input("New latitude:", format="%.2f")
+        if latitude:
+            params["latitude"] = latitude
+        longitude = st.number_input("New longitude:", format="%.2f")
+        if longitude:
+            params["longitude"] = longitude
+
+        cases = st.number_input("Cases: ", step=1, format="%i")
+        if cases:
+            params["cases"] = cases
+
+        deaths = st.number_input("Deaths: ", step=1, format="%i")
+        if deaths:
+            params["deaths"] = deaths
+
+        recoveries = st.number_input("Recoveries: ", step=1, format="%i")
+        if recoveries:
+            params["recoveries"] = recoveries
+
+        cases_accumulated = st.number_input("Cases accumulated: ", step=1, format="%i")
+        if cases_accumulated:
+            params["cases_accumulated"] = cases_accumulated
+
+        deaths_accumulated = st.number_input(
             "Deaths acccumulated: ", step=1, format="%i"
         )
-        params["recoveries_accumulated"] = st.number_input(
+        if deaths_accumulated:
+            params["deaths_accumulated"] = deaths_accumulated
+
+        recoveries_accumulated = st.number_input(
             "Recoveries accumulated: ", step=1, format="%i"
         )
-        params["date"] = datetime.combine(st.date_input("Date: "), min.time())
+        if recoveries_accumulated:
+            params["recoveries_accumulated"] = recoveries_accumulated
+        date_select = st.selectbox("Update the date:", options=["Yes", "No"])
+        if date_select == "Yes":
+            params["date"] = datetime.combine(
+                st.date_input("Date: "), datetime.min.time()
+            ).isoformat()
+
+        if longitude and latitude:
+            params["location"] = {}
+            params["location"]["type"] = "Point"
+            params["location"]["coordinates"] = [
+                params["longitude"],
+                params["latitude"],
+            ]
 
     if objectid and st.button("Update"):
-        headers = {"access_token": api_key}
+        headers = {
+            "access_token": api_key,
+            "accept": "application/json",
+            "Content-Type": "application/json",
+        }
         try:
             result = requests.patch(
                 f"{api_uri}/internals/covid/update/{objectid}",
-                params=params,
+                data=json.dumps(params),
                 headers=headers,
             )
             if result.status_code >= 400:
@@ -75,7 +115,7 @@ def update():
 
 def insert():
     st.write("Inserting a new row in the database")
-    params = {}
+    params = {"location": {"type": "Point"}}
     params["country"] = st.text_input("New country:")
     params["latitude"] = st.number_input("New latitude:", format="%.2f")
     params["longitude"] = st.number_input("New longitude:", format="%.2f")
@@ -91,13 +131,21 @@ def insert():
     params["recoveries_accumulated"] = st.number_input(
         "Recoveries accumulated: ", step=1, format="%i"
     )
-    params["date"] = datetime.combine(st.date_input("Date: "), min.time())
-
+    params["date"] = datetime.combine(
+        st.date_input("Date: "), datetime.min.time()
+    ).isoformat()
+    params["location"]["coordinates"] = [params["longitude"], params["latitude"]]
     if st.button("Insert"):
-        headers = {"access_token": api_key}
+        headers = {
+            "access_token": api_key,
+            "accept": "application/json",
+            "Content-Type": "application/json",
+        }
         try:
             result = requests.put(
-                f"{api_uri}/internals/covid/create", params=params, headers=headers
+                f"{api_uri}/internals/covid/create",
+                data=json.dumps(params),
+                headers=headers,
             )
             if result.status_code >= 400:
                 st.error(result.text)
