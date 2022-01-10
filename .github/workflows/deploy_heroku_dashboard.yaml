@@ -3,7 +3,7 @@ name: Deploy dashboard
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'dashboard/**'
 
