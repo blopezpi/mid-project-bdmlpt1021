@@ -64,7 +64,7 @@ def by_month(type_: str, selection: str, countries: List[str]):
         )
         if year == 2021:
             how_months = st.sidebar.slider(
-                "Select how many months ", value=1, min_value=1, max_value=13 - month
+                "Select how many months ", value=1, min_value=0, max_value=13 - month
             )
         else:
             how_months = st.sidebar.slider(
