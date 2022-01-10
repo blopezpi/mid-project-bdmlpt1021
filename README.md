@@ -17,6 +17,15 @@
 - [ ] L5: Controlar el pipeline con Apache Airflow
 
 *This data is impossible to get geoqueries, because the different coordinate points are too far.
+### **INDEX**
+1. [API](#api)
+    1. [API Structured](#api-structured)
+1. [MONGO](#mongo)
+1. [DASHBOARD](#dashboard)
+    1. [DASHBOARD Structured](#dashboard-structured)
+1. [PRE-COMMIT](#pre-commit)
+1. [REFERENCES](#references)
+
 
 ### **API**
 The API has different endpoints: You can have the documentation of the api [here](https://mid-api-covid.herokuapp.com/docs#/).
