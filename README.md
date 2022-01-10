@@ -1,7 +1,17 @@
-# mid project bdmlpt1021
-## COVID-19
+# COVID-19
 
-### **Task list**
+## **INDEX**
+1. [Task list](#task-list)
+1. [API](#api)
+    1. [API Structured](#api-structured)
+1. [MONGO](#mongo)
+1. [DASHBOARD](#dashboard)
+    1. [DASHBOARD Structured](#dashboard-structured)
+1. [PRE-COMMIT](#pre-commit)
+1. [REFERENCES](#references)
+
+
+## **Task list**
 
 - [x] L1: Crear api en fastapi
 - [x] L1: Crear dashboard en streamlit
@@ -16,18 +26,11 @@
 - [x] L4: Crear contenedor Docker y hacer deploy de los servicios en el cloud (Heroku. Los dos servicios deben subirse separadamente)
 - [ ] L5: Controlar el pipeline con Apache Airflow
 
-*This data is impossible to get geoqueries, because the different coordinate points are too far.
-### **INDEX**
-1. [API](#api)
-    1. [API Structured](#api-structured)
-1. [MONGO](#mongo)
-1. [DASHBOARD](#dashboard)
-    1. [DASHBOARD Structured](#dashboard-structured)
-1. [PRE-COMMIT](#pre-commit)
-1. [REFERENCES](#references)
+*With this data is impossible to get geoqueries, because the different coordinate points are too far.
 
 
-### **API**
+
+## **API**
 The API has different endpoints: You can have the documentation of the api [here](https://mid-api-covid.herokuapp.com/docs#/).
 The API is divided by cases, deaths and recoveries. It has other endpoints that are common for example the internals endpoint can use to CRUD requests.
 
@@ -42,12 +45,15 @@ uvicorn main:app --reload
 And you can go to [http://localhost:8000/docs](http://localhost:8000/docs) to get the api correctly running.
 
 You need the following environment variables or put a `.env` file in the `api/src` directory:
+
+```
 - MONGO_URI -> The mongo url with the user and pass to get the information.
 - MONGO_DB -> The database where thhe information is stored.
 - MONGO_COL -> The collection of the database.
 - API_KEY -> Api key used to access to the internals uris.
+```
 
-#### **API Structured**
+### **API Structured**
 ```
 .
 ├── Dockerfile
@@ -79,7 +85,7 @@ You need the following environment variables or put a `.env` file in the `api/sr
         └── time_response.py
 ```
 
-### **MONGO**
+## **MONGO**
 It's deployed using mongo atlas in a shared cluster.
 
 Each mongo document has the following structured:
@@ -103,11 +109,11 @@ Each mongo document has the following structured:
 }
 ```
 
-It has a GEOSPHERE index to make the possibility to geoqueries. Also, the mongo has two more index:
+It has a `GEOSPHERE` index to make the possibility to geoqueries. Also, the mongo has two more index:
 - Index in the date field.
 - Index compound by country and date fields.
 
-### **DASHBOARD**
+## **DASHBOARD**
 The dashboard has made with streamlit and it's divided in multipages:
 - Home -> Home page (Nothing more to explain here).
 - Cases -> Cases page. Here you can navigate and select the countries with a date range, you can see the different options in the sidebar to get different results. The results were the cases per each country.
@@ -126,14 +132,17 @@ When you install all the required packages you can get the dashboard up and runn
 $ streamlit run main.py
 ```
 You need the following environment variables:
+
+```
 - MJ_APIKEY_PUBLIC -> The public api key to configure mailjet.
 - MJ_APIKEY_PRIVATE -> The secret api key to auth with mailjet.
 - USER_PASS -> The password used to get into the internals page.
 - API_KEY -> Api key used to connect with the authentication endpoints.
 - API_URL -> Api URL used by streamlit to get the information
 - MAIL -> From mail used from mailjet to send emails.
+```
 
-#### **Dashboard Structured**
+### **Dashboard Structured**
 ```
 ├── Dockerfile
 ├── requirements.txt -> Dependencies
@@ -158,14 +167,14 @@ You need the following environment variables:
 └── start.sh -> Script used to deploy in heroku. (The $PORT is needed).
 ```
 
-### **Pre-commit**
+## **Pre-commit**
 This pre-commit is used to get good practices on python coding. It uses the following modules:
 - https://github.com/psf/black -> Code formatted.
 - https://flake8.pycqa.org/en/latest/ -> Code style guide.
 - https://github.com/PyCQA/isort -> Sort import alphabetically.
 - The `setup.cfg` has the configuration for flake8 and isort.
 
-### REFERENCES
+## **REFERENCES**
 - https://docs.streamlit.io/library/get-started
 - https://plotly.com/python/
 - https://pydeck.gl/gallery/heatmap_layer.html
