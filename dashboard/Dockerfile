@@ -6,7 +6,6 @@ LABEL maintainer="Borja Lopez"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Create a non-root user group
 RUN useradd \
       --uid 1000 \
       --shell /bin/bash \

@@ -10,7 +10,6 @@ ENV APP_MODULE="main:app" \
     HOST=0.0.0.0 \
     LOG_LEVEL=info
 
-
 RUN useradd -m -b /app --shell /bin/bash --uid 1000 ${USER}
 
 COPY ./requirements.txt /app/requirements.txt
