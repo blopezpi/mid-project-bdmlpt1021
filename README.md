@@ -3,10 +3,10 @@
 ## **INDEX**
 1. [Task list](#task-list)
 1. [API](#api)
-    1. [API Structured](#api-structured)
+    1. [API Structure](#api-structure)
 1. [MONGO](#mongo)
 1. [DASHBOARD](#dashboard)
-    1. [DASHBOARD Structured](#dashboard-structured)
+    1. [DASHBOARD Structure](#dashboard-structure)
 1. [PRE-COMMIT](#pre-commit)
 1. [REFERENCES](#references)
 
@@ -53,7 +53,7 @@ You need the following environment variables or put a `.env` file in the `api/sr
 - API_KEY -> Api key used to access to the internals uris.
 ```
 
-### **API Structured**
+### **API Structure**
 ```
 .
 ├── Dockerfile
@@ -142,7 +142,7 @@ You need the following environment variables:
 - MAIL -> From mail used from mailjet to send emails.
 ```
 
-### **Dashboard Structured**
+### **Dashboard Structure**
 ```
 ├── Dockerfile
 ├── requirements.txt -> Dependencies
