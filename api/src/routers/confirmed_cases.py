@@ -251,7 +251,7 @@ def get_confirmed_coord(date: date) -> Dict:
 )
 def get_cases_monthrange(
     start_month: str = Query("2021-01", regex="^202[01]-(?:0[1-9]|1[012])$"),
-    end_month: str = Query("2021-03", regex="^202[01]-(?:0[1-9]|1[012])$"),
+    end_month: str = Query("2021-03", regex="^202[012]-(?:0[1-9]|1[012])$"),
     countries: Optional[str] = None,
 ) -> Dict:
     """
