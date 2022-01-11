@@ -80,9 +80,9 @@ def by_month(type_: str, selection: str, countries: List[str]):
         )
 
         line_chart(df_interval, type_)
-        st.write(":heavy_minus_sign:" * 80)
+        separator()
         bar_chart(df_interval, type_)
-        st.write(":heavy_minus_sign:" * 80)
+        separator()
         heatmap(df_interval, type_)
 
     elif selection == "Month range":
@@ -122,9 +122,9 @@ def by_month(type_: str, selection: str, countries: List[str]):
             )
         )
         line_chart(df_range, type_)
-        st.write(":heavy_minus_sign:" * 80)
+        separator()
         bar_chart(df_range, type_)
-        st.write(":heavy_minus_sign:" * 80)
+        separator()
         heatmap(df_range, type_)
 
 
@@ -141,45 +141,31 @@ def date_interval(type_: str, str_countries: str):
     df = pd.DataFrame(dt.range(type_, _start_date, str_countries, interval=days))
 
     line_chart(df, type_)
-    st.write(":heavy_minus_sign:" * 80)
+    separator()
     bar_chart(df, type_)
-    st.write(":heavy_minus_sign:" * 80)
+    separator()
     heatmap(df, type_)
 
 
 def date_range_func(type_: str, str_countries: str):
-    t_date = st.sidebar.date_input(
-        "Pick a range date: ", date_range, min_value=start_date, max_value=end_date
-    )
-    start_date_1 = t_date[0]
-    end_date_1 = t_date[-1]
-    if t_date[0] > t_date[-1]:
-        start_date_1 = t_date[-1]
-        end_date_1 = t_date[0]
-
-    df_range = pd.DataFrame(
-        dt.range(type_, start_date_1, str_countries, end=end_date_1)
-    )
+    t_date = range_date()
+    if not t_date:
+        st.stop()
+    df_range = pd.DataFrame(dt.range(type_, t_date[0], str_countries, end=t_date[-1]))
 
     line_chart(df_range, type_)
-    st.write(":heavy_minus_sign:" * 80)
+    separator()
     bar_chart(df_range, type_)
-    st.write(":heavy_minus_sign:" * 80)
+    separator()
     heatmap(df_range, type_)
 
 
 def by_day_all(countries: List[str]):
     str_countries = ";".join(countries)
-    t_date = st.sidebar.date_input(
-        "Pick a range date: ", date_range, min_value=start_date, max_value=end_date
-    )
-    start_date_1 = t_date[0]
-    end_date_1 = t_date[-1]
-    if t_date[0] > t_date[-1]:
-        start_date_1 = t_date[-1]
-        end_date_1 = t_date[0]
-
-    return pd.DataFrame(dt.range("all", start_date_1, str_countries, end=end_date_1))
+    t_date = range_date()
+    if not t_date:
+        st.stop()
+    return pd.DataFrame(dt.range("all", t_date[0], str_countries, end=t_date[-1]))
 
 
 def heatmap(df: pd.DataFrame, type_: str):
@@ -226,3 +212,76 @@ def bar_chart(df: pd.DataFrame, type_: str):
             aggregated by date and country per day or month.
         """
         )
+
+
+def paint(type_: str):
+    separator()
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.empty()
+
+    with col2:
+        last = dt.last_data(type_)
+        total = last[f"{type_}_accumulated"]
+        delta = last[type_]
+
+        with st.container():
+            st.metric(
+                label=f'Last {type_} registered in the world at {last["date"]}',
+                value=total,
+                delta=delta,
+                delta_color="inverse",
+            )
+
+    with col3:
+        st.empty()
+
+    separator()
+    countries = st_countries()
+    if countries:
+        countries = countries[:10]
+    else:
+        st.stop()
+
+    selection = st.sidebar.radio(
+        "Select one of the following options to view:", options=["By month", "By day"]
+    )
+
+    select = ""
+
+    if selection == "By month":
+        select = st.sidebar.selectbox(
+            "Select one of the following options:",
+            options=["Month interval", "Month range"],
+        )
+        by_month("cases", select, countries)
+    else:
+        select = st.sidebar.selectbox(
+            "Select one of the following options:",
+            options=["Date interval", "Date range", "Only a date", "Last day"],
+        )
+        by_day("cases", select, countries)
+
+
+def st_countries():
+    countries = st.sidebar.multiselect(
+        "Select one or more countries (max 10): ", options=dt.get_countries()
+    )
+    return countries
+
+
+def range_date():
+    t_date = st.sidebar.date_input(
+        "Pick a range date: ", date_range, min_value=start_date, max_value=end_date
+    )
+    if (t_date[-1] - t_date[0]).days < 60:
+        return t_date
+    else:
+        st.error("You cannot select more than 60 days range.")
+
+
+def separator():
+    st.markdown(
+        """<hr style="height:10px;border:none;color:#333;background-color:#333;" /> """,
+        unsafe_allow_html=True,
+    )
