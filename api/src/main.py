@@ -4,6 +4,8 @@ import config
 from fastapi import FastAPI
 from internals import internal_operations
 from routers import common, confirmed_cases, deaths, recoveries
+from sentry import set_sentry
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
 
 @lru_cache()
@@ -12,6 +14,8 @@ def get_settings():
 
 
 settings = get_settings()
+
+set_sentry()
 
 description = """
 Covid API helps you do get updated about the covid pandemic. 🚀
@@ -68,6 +72,12 @@ def create_application():
 
 
 app = create_application()
+
+
+try:
+    app.add_middleware(SentryAsgiMiddleware)
+except Exception:
+    pass
 
 
 @app.on_event("startup")
