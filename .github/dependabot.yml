@@ -1,0 +1,42 @@
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target:
+      branch: "main"
+    assignees:
+      - "blopezpi"
+    commit-message:
+      prefix: "[Github actions Security Update]"
+
+  # Maintain dependencies for pip on api
+  - package-ecosystem: "pip"
+    directory: "/api"
+    schedule:
+      interval: "weekly"
+    target:
+      branch: "main"
+    allow:
+      - dependency-type: "all"
+    assignees:
+      - "blopezpi"
+    commit-message:
+      prefix: "[Api Security Update]"
+
+  # Maintain dependencies for pip on dashboard
+  - package-ecosystem: "pip"
+    directory: "/dashboard"
+    schedule:
+      interval: "weekly"
+    target:
+      branch: "main"
+    allow:
+      - dependency-type: "all"
+    assignees:
+      - "blopezpi"
+    commit-message:
+      prefix: "[Dashboard Security Update]"
