@@ -1,6 +1,9 @@
 import streamlit as st
 from multiapp import MultiApp
 from pages import cases, deaths, home, internals, maps, recoveries, report
+from sentry import set_sentry
+
+set_sentry()
 
 st.set_page_config(
     layout="wide",
