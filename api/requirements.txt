@@ -3,4 +3,4 @@ pydantic==1.9.0
 pymongo==4.0.1
 uvicorn[standard]==0.15.0
 fastapi==0.68.1
-sentry-sdk==1.5.2
+sentry-sdk==1.5.3
