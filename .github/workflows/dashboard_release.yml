@@ -21,7 +21,6 @@ jobs:
         with:
           semantic_version: "18.0.1"
           working_directory: ./dashboard
-          dry_run: true
           extends: |
             semantic-release-monorepo
           extra_plugins: |
