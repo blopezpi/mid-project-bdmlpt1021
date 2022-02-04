@@ -23,7 +23,7 @@ jobs:
           working_directory: ./dashboard
           dry_run: true
           extends: |
-            @semantic-release/semantic-release-monorepo
+            semantic-release-monorepo
           extra_plugins: |
             @semantic-release/github@8.0.2
         env:
