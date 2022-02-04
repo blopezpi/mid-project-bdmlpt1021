@@ -34,7 +34,7 @@ jobs:
         with:
           semantic_version: "18.0.1"
           dry_run: true
-          working_dir: ./api
+          working_directory: ./api
           extends: |
             semantic-release-monorepo
           extra_plugins: |
