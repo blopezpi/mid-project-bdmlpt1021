@@ -1,6 +1,5 @@
 FROM python:3.9.0-slim
 
-# User to run the container
 ENV USER=dashboard
 
 LABEL maintainer="Borja Lopez"
