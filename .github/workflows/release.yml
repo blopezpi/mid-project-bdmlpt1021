@@ -39,6 +39,8 @@ jobs:
             semantic-release-monorepo
           extra_plugins: |
             @semantic-release/github@8.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - if: steps.dashboard.outputs.src == 'true'
         name: Semantic Release Dashboard
