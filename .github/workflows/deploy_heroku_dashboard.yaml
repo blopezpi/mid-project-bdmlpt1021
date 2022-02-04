@@ -2,10 +2,8 @@ name: Deploy dashboard
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'dashboard/**'
+    tags:
+      - "dashboard-*"
 
 jobs:
   build:

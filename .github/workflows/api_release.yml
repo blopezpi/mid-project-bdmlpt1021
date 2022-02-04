@@ -3,7 +3,7 @@ name: New Release API
 on:
   push:
     branches:
-      - develop
+      - main
     paths:
       - 'api/**'
 

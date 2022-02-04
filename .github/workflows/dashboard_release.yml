@@ -3,7 +3,7 @@ name: New Release Dashboard
 on:
   push:
     branches:
-      - develop
+      - main
     paths:
       - 'dashboard/**'
 

@@ -2,7 +2,6 @@ FROM python:3.9.0-slim
 
 ENV USER=dashboard
 
-
 LABEL maintainer="Borja Lopez"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

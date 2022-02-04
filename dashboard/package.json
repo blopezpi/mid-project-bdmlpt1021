@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "release": {
-    "branches": ["develop"],
+    "branches": ["main"],
     "extends": "semantic-release-monorepo",
     "plugins": [
       "@semantic-release/github",
