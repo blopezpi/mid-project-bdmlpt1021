@@ -1,6 +1,7 @@
 {
   "name": "api",
   "release": {
+    "branches": ["develop"],
     "extends": "semantic-release-monorepo",
     "plugins": [
       "@semantic-release/github",
