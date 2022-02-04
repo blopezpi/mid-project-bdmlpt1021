@@ -3,7 +3,7 @@ name: New Release
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   new-release:
@@ -12,14 +12,41 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - name: Semantic Release
+
+      - uses: dorny/paths-filter@v2
+        id: api
+        with:
+          filters: |
+            src:
+              - 'api/**'
+
+      - uses: dorny/paths-filter@v2
+        id: dashboard
+        with:
+          filters: |
+            src:
+              - 'dashboard/**'
+
+      - if: steps.api.outputs.src == 'true'
+        name: Semantic Release API
         uses: cycjimmy/semantic-release-action@v2
-        id: semantic
+        id: semantic_api
         with:
           semantic_version: "18.0.1"
+          dry_run: true
+          extends: |
+            @semantic-release/semantic-release-monorepo
           extra_plugins: |
-            @semantic-release/changelog@6.0.1
-            @semantic-release/git@10.0.1
-            @semantic-release/exec@6.0.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+            @semantic-release/github@8.0.2
+
+      - if: steps.dashboard.outputs.src == 'true'
+        name: Semantic Release Dashboard
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic_dashboard
+        with:
+          semantic_version: "18.0.1"
+          dry_run: true
+          extends: |
+            @semantic-release/semantic-release-monorepo
+          extra_plugins: |
+            @semantic-release/github@8.0.2
