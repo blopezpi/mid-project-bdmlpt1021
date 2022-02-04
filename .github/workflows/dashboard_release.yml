@@ -1,0 +1,30 @@
+name: New Release Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dashboard/**'
+
+jobs:
+  new-release:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Semantic Release Dashboard
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic_dashboard
+        with:
+          semantic_version: "18.0.1"
+          working_directory: ./dashboard
+          dry_run: true
+          extends: |
+            semantic-release-monorepo
+          extra_plugins: |
+            @semantic-release/github@8.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

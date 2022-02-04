@@ -1,0 +1,30 @@
+name: New Release API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/**'
+
+jobs:
+  new-release:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Semantic Release API
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic_api
+        with:
+          semantic_version: "18.0.1"
+          dry_run: true
+          working_directory: ./api
+          extends: |
+            semantic-release-monorepo
+          extra_plugins: |
+            @semantic-release/github@8.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
