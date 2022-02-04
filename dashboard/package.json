@@ -1,0 +1,11 @@
+{
+  "name": "dashboard",
+  "release": {
+    "branches": ["develop"],
+    "extends": "semantic-release-monorepo",
+    "plugins": [
+      "@semantic-release/github",
+      "@semantic-release/commit-analyzer"
+    ]
+  }
+}
