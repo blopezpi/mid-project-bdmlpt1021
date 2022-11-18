@@ -16,7 +16,7 @@ jobs:
           persist-credentials: false
 
       - name: Semantic Release Dashboard
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic_dashboard
         with:
           semantic_version: "18.0.1"
