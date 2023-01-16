@@ -1,4 +1,4 @@
-dnspython==2.2.0
+dnspython==2.3.0
 pydantic==1.9.0
 pymongo==4.0.1
 uvicorn[standard]==0.17.4
